@@ -21,6 +21,7 @@ public class Normaldrive extends LinearOpMode {
         backRightDrive.setPower(gamepad1.left_stick_y+gamepad1.left_stick_x-gamepad1.right_stick_x);
         frontLeftDrive.setPower(gamepad1.left_stick_y+gamepad1.left_stick_x+gamepad1.right_stick_x);
         frontRightDrive.setPower(gamepad1.left_stick_y-gamepad1.left_stick_x-gamepad1.right_stick_x);
+          // need to replace this stuff with the dead wheel encoders
         telemetry.addData("left", backLeftDrive.getCurrentPosition());
         telemetry.addData("right", backRightDrive.getCurrentPosition());
         telemetry.addData("top", frontLeftDrive.getCurrentPosition());
@@ -30,4 +31,5 @@ public class Normaldrive extends LinearOpMode {
         }
       }
     }
+
 }
