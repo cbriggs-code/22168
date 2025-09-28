@@ -1,3 +1,4 @@
+// so like just import this stuff later.....
 public class Normaldrive extends LinearOpMode {
     DcMotor backLeftDrive;
     DcMotor backRightDrive;
@@ -27,9 +28,10 @@ public class Normaldrive extends LinearOpMode {
         telemetry.addData("top", frontLeftDrive.getCurrentPosition());
         telemetry.update();
         if(thelongdriveback){
-            //code for going back to the start point to test encoders would be here but the testing i have does not have dead wheels nor a working imu system
+            // code for going back to the start point to test encoders would be here but the testing i have does not have dead wheels nor a working imu system
         }
       }
     }
 
 }
+
