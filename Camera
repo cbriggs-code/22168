@@ -1,3 +1,4 @@
+import java.util.Arrays;
 public class RobotCode {
 
     // --- Simulated Hardware and Constants ---
@@ -10,8 +11,8 @@ public class RobotCode {
     // Array representing the raw RGB data (R, G, B for each pixel)
     private static int[] simulatedFrameData;
 
-    // Last known successful QR code content
-    private static String qrCodeContent = "Scanning...";
+    // Last known successful AprilTag content (Tag ID and Pose Data)
+    private static String aprilTagContent = "Scanning for AprilTag...";
 
     /**
      * Represents a single camera frame's data.
@@ -66,7 +67,7 @@ public class RobotCode {
 
     /**
      * Creates a mock image array for testing the vision logic.
-     * The image is mostly Blue, with a Red center target, and a Green QR area.
+     * The image is mostly Blue, with a Red center target, and a Green object.
      * @return A 1D array of integers (RGB, RGB, RGB...)
      */
     private static int[] createMockImage() {
@@ -126,7 +127,7 @@ public class RobotCode {
     private static void runRobotLogic(int cycle) {
         MockVisionFrame frame = readCameraFrame();
 
-        // 1. Analyze the color of the central target (translated from analyzeColor JS function)
+        // 1. Analyze the color of the central target
         int[] avgColor = analyzeImageColor(frame);
         System.out.printf("RESULT: Detected Color (RGB) -> R: %d, G: %d, B: %d\n",
                           avgColor[0], avgColor[1], avgColor[2]);
@@ -138,22 +139,22 @@ public class RobotCode {
             System.out.println("ROBOT ACTION: Center target is not red. Waiting for target...");
         }
 
-        // 2. Detect the QR code (translated from detectQrCode JS function)
+        // 2. Detect the AprilTag
         // We simulate a successful detection only on the first cycle for demonstration
         if (cycle == 0) {
-            // Simulate a successful QR detection
-            qrCodeContent = detectQrCode(frame, true);
+            // Simulate a successful AprilTag detection
+            aprilTagContent = detectAprilTag(frame, true);
         } else {
             // Simulate scanning in subsequent cycles
-            qrCodeContent = detectQrCode(frame, false);
+            aprilTagContent = detectAprilTag(frame, false);
         }
 
-        System.out.println("RESULT: QR Code Content -> " + qrCodeContent);
+        System.out.println("RESULT: AprilTag Content -> " + aprilTagContent);
 
-        // Example robot action based on QR code:
-        if (!qrCodeContent.equals("Scanning...")) {
-            System.out.println("ROBOT ACTION: Successfully read QR code data: " + qrCodeContent);
-            // Further actions would parse the string (e.g., move to coordinates, change mode)
+        // Example robot action based on AprilTag data:
+        if (!aprilTagContent.equals("Scanning for AprilTag...")) {
+            System.out.println("ROBOT ACTION: Successfully localized using tag: " + aprilTagContent);
+            // Further actions would parse the string (e.g., align to tag pose)
         }
     }
 
@@ -207,25 +208,26 @@ public class RobotCode {
 
 
     /**
-     * Simulates the detection of a QR code.
+     * Simulates the detection of an AprilTag.
      *
-     * NOTE: Actual QR detection requires a library like ZXing (Zebra Crossing)
-     * and is a computationally intensive task usually offloaded in robotics.
+     * NOTE: Actual AprilTag detection requires a complex vision library
+     * and is a computationally intensive task.
      * This method simply simulates the output based on a success flag.
      *
      * @param frame The vision frame (unused in simulation but kept for API structure).
      * @param success If true, simulates a successful read.
-     * @return The QR code content string or "Scanning..." if not found.
+     * @return The AprilTag content string (ID and simulated pose) or "Scanning..." if not found.
      */
-    private static String detectQrCode(MockVisionFrame frame, boolean success) {
+    private static String detectAprilTag(MockVisionFrame frame, boolean success) {
         // In a real system:
-        // 1. Pass frame.data to a specialized QR decoding library (like ZXing in Java).
-        // 2. The library returns the decoded string or null/exception.
+        // 1. Pass frame.data to an AprilTag decoding library.
+        // 2. The library returns the detected Tag ID and 3D pose data (X, Y, Z, Yaw, Pitch, Roll).
 
         if (success) {
-            return "W47.33-N122.50"; // Simulated GPS coordinate from a QR code
+            // Simulated Tag ID 5, 0.5 meters away (Z-axis)
+            return "Tag ID: 5 (Pose: X=0.05m, Z=0.50m)";
         } else {
-            return "Scanning...";
+            return "Scanning for AprilTag...";
         }
     }
 }
