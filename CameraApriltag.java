@@ -9,11 +9,7 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 
-/**
- * This OpMode demonstrates the basics of using multiple vision portals simultaneously
- */
-@TeleOp(name = "Concept: AprilTagMultiPortal", group = "Concept")
-@Disabled
+
 public class ConceptAprilTagMultiPortal extends LinearOpMode
 {
     VisionPortal portal1;
@@ -69,7 +65,10 @@ public class ConceptAprilTagMultiPortal extends LinearOpMode
             telemetry.addData("Number of tags in Camera 1", aprilTagProcessor1.getDetections().size());
             telemetry.addData("Number of tags in Camera 2", aprilTagProcessor2.getDetections().size());
             telemetry.update();
-            sleep(20);
+
+
+
+            
         }
     }
 }
