@@ -12,6 +12,7 @@ public class Normaldrive extends LinearOpMode {
     DcMotor backRightDrive;
     DcMotor frontLeftDrive;
     DcMotor frontRightDrive;
+    DcMotor powerDrive;
     BNO055IMU imu;
 
 @Override
@@ -20,6 +21,7 @@ public class Normaldrive extends LinearOpMode {
       backRightDrive = hardwareMap.get(DcMotor.class, "backRightDrive");
       frontLeftDrive = hardwareMap.get(DcMotor.class, "frontLeftDrive");
       frontRightDrive = hardwareMap.get(DcMotor.class, "frontRightDrive");
+      powerDrive = hardwareMap.get(DcMotor.class, "powerDrive");
       imu = hardwareMap.get(BNO055IMU.class, "imu");
       backLeftDrive.setDirection(DcMotor.Direction.REVERSE);
       frontLeftDrive.setDirection(DcMotor.Direction.REVERSE);
@@ -37,10 +39,12 @@ public class Normaldrive extends LinearOpMode {
         telemetry.update();
         if(thelongdriveback){
             // code for going back to the start point to test encoders would be here but the testing i have does not have dead wheels nor a working imu system
+            powerDrive.setPower(1);
         }
       }
     }
 
 }
+
 
 
