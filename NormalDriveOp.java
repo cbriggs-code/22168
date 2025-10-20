@@ -8,10 +8,10 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 // so like just import this stuff later.....
 public class Normaldrive extends LinearOpMode {
-    DcMotor backLeftDrive;
-    DcMotor backRightDrive;
-    DcMotor frontLeftDrive;
-    DcMotor frontRightDrive;
+    DcMotor m1;
+    DcMotor m2;
+    DcMotor m3;
+    DcMotor m4;
     DcMotor powerDrive;
     BNO055IMU imu;
 
@@ -45,6 +45,7 @@ public class Normaldrive extends LinearOpMode {
     }
 
 }
+
 
 
 
