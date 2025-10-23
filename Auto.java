@@ -13,7 +13,6 @@ public class Normaldrive extends LinearOpMode {
     DcMotor m3;
     DcMotor m4;
     DcMotor powerDrive;
-    BNO055IMU imu;
 
 @Override
     public void runOpMode() {
@@ -22,17 +21,16 @@ public class Normaldrive extends LinearOpMode {
       frontLeftDrive = hardwareMap.get(DcMotor.class, "frontLeftDrive");
       frontRightDrive = hardwareMap.get(DcMotor.class, "frontRightDrive");
       powerDrive = hardwareMap.get(DcMotor.class, "powerDrive");
-      imu = hardwareMap.get(BNO055IMU.class, "imu");
       backLeftDrive.setDirection(DcMotor.Direction.REVERSE);
       frontLeftDrive.setDirection(DcMotor.Direction.REVERSE);
       Boolean thelongdriveback = false;
       while (opModeIsActive()) {
-          // need to replace this stuff with the dead wheel encoders
-        telemetry.addData("left", backLeftDrive.getCurrentPosition());
-        telemetry.addData("right", backRightDrive.getCurrentPosition());
-        telemetry.addData("top", frontLeftDrive.getCurrentPosition());
-        telemetry.update();
-            powerDrive.setPower(1);
+      powerDrive.setPower(1);
+          setTargetPosition(int position)
+     backLeft.DrivesetTargetPosition(int position);
+     backRight.DrivesetTargetPosition(int position);
+     frontLeft.DrivesetTargetPosition(int position);
+     frontRight.DrivesetTargetPosition(int position);
         }
       }
     }
