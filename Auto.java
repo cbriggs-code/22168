@@ -25,12 +25,10 @@ public class Normaldrive extends LinearOpMode {
       frontLeftDrive.setDirection(DcMotor.Direction.REVERSE);
       Boolean thelongdriveback = false;
       while (opModeIsActive()) {
-      powerDrive.setPower(1);
-          setTargetPosition(int position)
-     backLeft.DrivesetTargetPosition(int position);
-     backRight.DrivesetTargetPosition(int position);
-     frontLeft.DrivesetTargetPosition(int position);
-     frontRight.DrivesetTargetPosition(int position);
+      backLeft.DrivesetTargetPosition(1);
+      backRight.DrivesetTargetPosition(1);
+      frontLeft.DrivesetTargetPosition(1);
+      frontRight.DrivesetTargetPosition(1);
         }
       }
     }
