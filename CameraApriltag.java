@@ -12,7 +12,7 @@ import java.util.Collections;
  * 'AprilTagDetection', and 'ColorDetection' classes would map directly 
  * to library objects and methods.
  */
-public class CameraVisionSystem {
+public class CameraApriltag {
 
     // --- Mock Data Structures (Simulating real vision library outputs) ---
 
