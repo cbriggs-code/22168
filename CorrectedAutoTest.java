@@ -6,14 +6,11 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-// Import necessary classes for Vision Portal or EasyOpenCV
-// For this example, we'll use a structure compatible with EasyOpenCV logic
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvPipeline;
 
-// OpenCV Imports (Needed for the pipeline implementation)
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.Point;
@@ -34,9 +31,9 @@ public class CorrectedAutoTest extends LinearOpMode {
     private DcMotor frontRightDrive = null;
     
     // Mechanism Motors/Servos
-    private DcMotor powerDrive = null; // Assuming this is your launcher/shooter
+    private DcMotor powerDrive = null;
     private DcMotor intake = null;
-    private Servo push = null; // Assuming this is your push mechanism (e.g., in a launcher)
+    private Servo push = null;
 
     // Vision Variables
     private OpenCvCamera webcam;
