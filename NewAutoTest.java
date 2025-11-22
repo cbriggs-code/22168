@@ -2,23 +2,96 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Collections;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
-/**
- * NewAutoTest
- * * This class simulates the core logic required for a camera vision system 
- * that performs AprilTag reading and color detection (Purple and Green) 
- * to determine the order of a 3-item set.
- * * In a real application (e.g., using OpenCV/FTC Vision), the 'Frame', 
- * 'AprilTagDetection', and 'ColorDetection' classes would map directly 
- * to library objects and methods.
- */
-public class NewAutoTest {
+package org.firstinspires.ftc.teamcode;
 
-    // --- Mock Data Structures (Simulating real vision library outputs) ---
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
-    /**
-     * Enum for the two detectable colors and a default state.
-     */
+@Autonomous
+public class NewAutoTest extends LinearOpMode {
+    
+    @Override
+    public void runOpMode() {
+    DcMotor backLeftDrive;
+    DcMotor backRightDrive;
+    DcMotor frontLeftDrive;
+    DcMotor frontRightDrive;
+    DcMotor powerDrive;
+    DcMotor intake;
+    Servo push;
+    USB Camera;
+        
+   private ElapsedTime runtime = new ElapsedTime();
+        
+        backLeftDrive = hardwareMap.get(DcMotor.class, "m1");
+        backRightDrive = hardwareMap.get(DcMotor.class, "m2");
+        frontLeftDrive = hardwareMap.get(DcMotor.class, "m3");
+        frontRightDrive = hardwareMap.get(DcMotor.class, "m4");
+        powerDrive = hardwareMap.get(DcMotor.class, "spinLaunch");
+        intake = hardwareMap.get(DcMotor.class, "intake");
+        push = hardwareMap.get(Servo.class, "push");
+        Camera = hardwareMap.get(USB.class, "Camera");
+        Timer = hardwareMap.get(timer.class, "Timer");
+        //powerDrive = hardwareMap.get(DcMotor.class, "powerDrive");
+        backLeftDrive.setDirection(DcMotor.Direction.REVERSE);
+        frontLeftDrive.setDirection(DcMotor.Direction.REVERSE);
+        Boolean thelongdriveback = false;
+        waitForStart();
+        //while (opModeIsActive()) {
+        if (runtime.seconds(0) >= 30.0){
+            backLeftDrive.setPower(0);
+            backRightDrive.setPower(0);
+            frontLeftDrive.setPower(0);
+            frontRightDrive.setPower(0);
+            powerDrive.setPower(0);
+            intake.setPower(0);
+            push.setPower(0);
+            Camera.setPower(0);
+        }
+            
+            backLeftDrive.setPower(1);
+            backRightDrive.setPower(1);
+            frontLeftDrive.setPower(1);
+            frontRightDrive.setPower(1);
+            sleep(780);
+            backLeftDrive.setPower(0.5);
+            backRightDrive.setPower(-0.5);
+            frontLeftDrive.setPower(0.6);
+            frontRightDrive.setPower(-0.6);
+            sleep(280);
+            backLeftDrive.setPower(.3);
+            backRightDrive.setPower(.3);
+            frontLeftDrive.setPower(.3);
+            frontRightDrive.setPower(.3);
+            sleep(360);
+            backLeftDrive.setPower(.3);
+            backRightDrive.setPower(.3);
+            frontLeftDrive.setPower(.3);
+            frontRightDrive.setPower(.3);
+            sleep(1400);
+            backLeftDrive.setPower(0);
+            backRightDrive.setPower(0);
+            frontLeftDrive.setPower(0);
+            frontRightDrive.setPower(0);
+            intake.setPower(1);
+            sleep(4500);
+            //launch code 
+            powerDrive.setPower(-1);
+            push.setPosition(0.7);
+            sleep(1000);
+            push.setPosition(1);
+            intake.setPower(0);
+        
+
+    if{
     enum DetectedColor {
         PURPLE,
         GREEN,
