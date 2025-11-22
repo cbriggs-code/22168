@@ -72,10 +72,5 @@ public class AutoJava extends LinearOpMode {
             sleep(1000);
             push.setPosition(1);
             intake.setPower(0);
-            sleep(30);
-            backLeftDrive.setPower(4);
-            backRightDrive.setPower(4);
-            frontLeftDrive.setPower(-4);
-            frontRightDrive.setPower(-4);
     }
 }
