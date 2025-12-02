@@ -63,6 +63,12 @@ public class CorrectedAutoTest extends LinearOpMode {
         // Motor Directions
         backLeftDrive.setDirection(DcMotor.Direction.REVERSE);
         frontLeftDrive.setDirection(DcMotor.Direction.REVERSE);
+        Boolean outToShoot = false;
+        Boolean inToShoot = false;
+        Boolean mainWheelOut = false;
+        Boolean mainWheelIn = false;
+        Boolean intakePush = true;
+        Integer internalTimer = 0;
         
         // Set motor modes (Crucial for consistent movement)
         backLeftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -96,6 +102,69 @@ public class CorrectedAutoTest extends LinearOpMode {
         while (!isStarted() && !isStopRequested()) {
             // Constantly update the detected position before the match starts
             detectedPosition = visionPipeline.getDetectedPosition();
+        if(gamepad1.dpad_up){}
+        if(gamepad2.crossWasPressed()){inToShoot=false;outToShoot=!outToShoot; powerDrive.setDirection(DcMotor.Direction.FORWARD);
+         }
+         if(gamepad2.circleWasPressed()){outToShoot=false;inToShoot=!inToShoot; powerDrive.setDirection(DcMotor.Direction.REVERSE);
+         }
+        if(gamepad2.rightBumperWasPressed()){mainWheelIn=false;mainWheelOut=!mainWheelOut; intake.setDirection(DcMotor.Direction.FORWARD);}
+        if(gamepad2.leftBumperWasPressed()){mainWheelOut=false;mainWheelIn=!mainWheelIn; intake.setDirection(DcMotor.Direction.REVERSE);}
+        if(gamepad2.squareWasPressed()){internalTimer=3000;intakePush=false;}
+        if(internalTimer<0){intakePush=true;}
+        //if(gamepad1.triangleWasPressed()){intakePush=true;}
+        internalTimer -= 100;
+        backLeftDrive.setPower(-gamepad1.left_stick_y-gamepad1.left_stick_x+gamepad1.right_stick_x);
+        backRightDrive.setPower(-gamepad1.left_stick_y+gamepad1.left_stick_x-gamepad1.right_stick_x);
+        frontLeftDrive.setPower(-gamepad1.left_stick_y+gamepad1.left_stick_x+gamepad1.right_stick_x);
+        frontRightDrive.setPower(-gamepad1.left_stick_y-gamepad1.left_stick_x-gamepad1.right_stick_x);
+          // need to replace this stuff with the dead wheel encoders
+        telemetry.addData("left", backLeftDrive.getCurrentPosition());
+        telemetry.addData("right", backRightDrive.getCurrentPosition());
+        telemetry.addData("top", frontLeftDrive.getCurrentPosition());
+        telemetry.update();
+        if(gamepad1.dpad_up){
+          backLeftDrive.setPower(.4);
+          backRightDrive.setPower(.4);
+          frontLeftDrive.setPower(.4);
+          frontRightDrive.setPower(.4);
+        }
+        if(gamepad1.dpad_down){
+          backLeftDrive.setPower(-.4);
+          backRightDrive.setPower(-.4);
+          frontLeftDrive.setPower(-.4);
+          frontRightDrive.setPower(-.4);
+        }
+        if(gamepad1.dpad_left){
+          backLeftDrive.setPower(.4);
+          backRightDrive.setPower(-.4);
+          frontLeftDrive.setPower(-.4);
+          frontRightDrive.setPower(.4);
+        }
+        if(gamepad1.dpad_right){
+          backLeftDrive.setPower(-.4);
+          backRightDrive.setPower(.4);
+          frontLeftDrive.setPower(.4);
+          frontRightDrive.setPower(-.4);
+        }
+        if(mainWheelOut || mainWheelIn){
+          intake.setPower(1);
+          
+        }else{
+          intake.setPower(0);
+        }
+        if(outToShoot || inToShoot){
+            // code for going back to the start point to test encoders would be here but the testing i have does not have dead wheels nor a working imu system
+            powerDrive.setPower(-1);
+        }else{
+          powerDrive.setPower(0);
+        }
+        if(intakePush){
+          push.setPosition(1);
+          
+        }else{
+          push.setPosition(0.7);
+        }
+            
         }
 
         // --- MATCH START ---
