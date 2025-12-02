@@ -68,6 +68,7 @@ public class CorrectedAutoTest extends LinearOpMode {
         Boolean mainWheelOut = false;
         Boolean mainWheelIn = false;
         Boolean intakePush = true;
+        Boolean cameraToggle = false;
         Integer internalTimer = 0;
         
         // Set motor modes (Crucial for consistent movement)
@@ -110,6 +111,7 @@ public class CorrectedAutoTest extends LinearOpMode {
         if(gamepad2.rightBumperWasPressed()){mainWheelIn=false;mainWheelOut=!mainWheelOut; intake.setDirection(DcMotor.Direction.FORWARD);}
         if(gamepad2.leftBumperWasPressed()){mainWheelOut=false;mainWheelIn=!mainWheelIn; intake.setDirection(DcMotor.Direction.REVERSE);}
         if(gamepad2.squareWasPressed()){internalTimer=3000;intakePush=false;}
+        if(gamepad1.AWasPressed()){cameraToggle = !cameraToggle;}
         if(internalTimer<0){intakePush=true;}
         //if(gamepad1.triangleWasPressed()){intakePush=true;}
         internalTimer -= 100;
@@ -164,6 +166,24 @@ public class CorrectedAutoTest extends LinearOpMode {
         }else{
           push.setPosition(0.7);
         }
+            if(cameraToggle){
+                    if (finalPosition == Position.LEFT) {
+                frontLeftDrive.setPower(.5);
+                frontRightDrive.setPower(-.5);
+                backLeftDrive.setPower(.5);
+                backRightDrive.setPower(-.5);
+            // ... place pixel
+        } else if (finalPosition == Position.CENTER) {
+            // nothing yet
+        } else if (finalPosition == Position.RIGHT) {
+            // Move to right spike mark
+            frontLeftDrive.setPower(-.5);
+            frontRightDrive.setPower(.5);
+            backLeftDrive.setPower(-.5);
+            backRightDrive.setPower(.5);
+            // ... place pixel
+        }
+            }
             
         }
 
