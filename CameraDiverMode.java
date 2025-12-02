@@ -123,6 +123,7 @@ public class CorrectedAutoTest extends LinearOpMode {
         telemetry.addData("left", backLeftDrive.getCurrentPosition());
         telemetry.addData("right", backRightDrive.getCurrentPosition());
         telemetry.addData("top", frontLeftDrive.getCurrentPosition());
+        telemetry.addData("finalPosition",finalPosition);
         telemetry.update();
         if(gamepad1.dpad_up){
           backLeftDrive.setPower(.4);
@@ -167,11 +168,11 @@ public class CorrectedAutoTest extends LinearOpMode {
           push.setPosition(0.7);
         }
             if(cameraToggle){
-                    if (finalPosition == Position.LEFT) {
-                frontLeftDrive.setPower(.5);
-                frontRightDrive.setPower(-.5);
-                backLeftDrive.setPower(.5);
-                backRightDrive.setPower(-.5);
+                if (finalPosition == Position.LEFT) {
+                    frontLeftDrive.setPower(.5);
+                    frontRightDrive.setPower(-.5);
+                    backLeftDrive.setPower(.5);
+                    backRightDrive.setPower(-.5);
             // ... place pixel
         } else if (finalPosition == Position.CENTER) {
             // nothing yet
