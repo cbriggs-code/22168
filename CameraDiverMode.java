@@ -80,7 +80,8 @@ public class CameraDriverMode extends LinearOpMode {
 
         // --- Vision Initialization (EasyOpenCV Setup) ---
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-        webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName.class, "Webcam 1"), cameraMonitorViewId);
+        //webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName.class, "Webcam 1"), cameraMonitorViewId);
+        webcam = hardwareMap.get(WebcamName.class, "Webcam 1");
         visionPipeline = new PurpleSphereDetectionPipeline();
         webcam.setPipeline(visionPipeline);
         
