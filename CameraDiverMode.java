@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import org.firstinspires.ftc.robotcore.external.navigation.Position;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -10,6 +12,7 @@ import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvPipeline;
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
@@ -19,7 +22,7 @@ import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 
 @TeleOp(name="CameraDiveMode", group="Production")
-public class CorrectedAutoTest extends LinearOpMode {
+public class CameraDriverMode extends LinearOpMode {
 
     // --- 1. Class-Level Hardware & Utility Declarations ---
     private ElapsedTime runtime = new ElapsedTime();
@@ -77,12 +80,12 @@ public class CorrectedAutoTest extends LinearOpMode {
 
         // --- Vision Initialization (EasyOpenCV Setup) ---
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-        webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(com.qualcomm.robotcore.hardware.WebcamName.class, "Webcam 1"), cameraMonitorViewId);
+        webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName.class, "Webcam 1"), cameraMonitorViewId);
         visionPipeline = new PurpleSphereDetectionPipeline();
         webcam.setPipeline(visionPipeline);
         
         // Start Streaming
-        webcam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
+        webcam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener(){
             @Override
             public void onOpenForTesting() {
                 webcam.startStreaming(320, 240, OpenCvCameraRotation.UPRIGHT);
