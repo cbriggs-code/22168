@@ -106,13 +106,13 @@ public class CameraDriverMode extends LinearOpMode {
 
         // Finalize detection result upon start
         Position finalPosition = visionPipeline.getDetectedPosition();
-        webcam.stopStreaming(); // Stop the camera feed to save resources
+        //webcam.stopStreaming(); // Stop the camera feed to save resources
 
         telemetry.addData("Status", "Initialized & Vision Streaming");
         telemetry.update();
 
         // --- PRE-START Loop for Vision Detection ---
-        while (!isStarted() && !isStopRequested()) {
+        while (opModeIsActive()) {
             // Constantly update the detected position before the match starts
             detectedPosition = visionPipeline.getDetectedPosition();
         if(gamepad1.dpad_up){}
@@ -181,19 +181,19 @@ public class CameraDriverMode extends LinearOpMode {
         }
             if(cameraToggle){
                 if (finalPosition == Position.LEFT) {
-                    frontLeftDrive.setPower(.5);
-                    frontRightDrive.setPower(-.5);
-                    backLeftDrive.setPower(.5);
-                    backRightDrive.setPower(-.5);
+                    // frontLeftDrive.setPower(.5);
+                    // frontRightDrive.setPower(-.5);
+                    // backLeftDrive.setPower(.5);
+                    // backRightDrive.setPower(-.5);
             // ... place pixel
         } else if (finalPosition == Position.CENTER) {
             // nothing yet
         } else if (finalPosition == Position.RIGHT) {
             // Move to right spike mark
-            frontLeftDrive.setPower(-.5);
-            frontRightDrive.setPower(.5);
-            backLeftDrive.setPower(-.5);
-            backRightDrive.setPower(.5);
+            // frontLeftDrive.setPower(-.5);
+            // frontRightDrive.setPower(.5);
+            // backLeftDrive.setPower(-.5);
+            // backRightDrive.setPower(.5);
             // ... place pixel
         }
             }
@@ -215,8 +215,8 @@ public class CameraDriverMode extends LinearOpMode {
         
         // Purple Sphere Detection Constants (Needs fine-tuning in a real environment!)
         // These are example HSV ranges for purple.
-        private final Scalar PURPLE_LOW = new Scalar(100, 100, 100);
-        private final Scalar PURPLE_HIGH = new Scalar(160, 255, 255);
+        private final Scalar PURPLE_LOW = new Scalar(260, 100, 100);
+        private final Scalar PURPLE_HIGH = new Scalar(300, 100, 100);
 
         // Define three Regions of Interest (ROIs) on the camera view
         // These coordinates are relative to the 320x240 image size set above.
