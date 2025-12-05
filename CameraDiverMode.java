@@ -12,6 +12,7 @@ import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvPipeline;
+import org.openftc.easyopencv.OpenCvInternalCamera;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 
 import org.opencv.core.Core;
@@ -80,8 +81,7 @@ public class CameraDriverMode extends LinearOpMode {
 
         // --- Vision Initialization (EasyOpenCV Setup) ---
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-        //webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName.class, "Webcam 1"), cameraMonitorViewId);
-        webcam = hardwareMap.get(WebcamName.class, "Webcam 1");
+        webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
         visionPipeline = new PurpleSphereDetectionPipeline();
         webcam.setPipeline(visionPipeline);
         
