@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.robotcore.external.navigation.Position;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -8,12 +7,14 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvPipeline;
 import org.openftc.easyopencv.OpenCvInternalCamera;
-import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.openftc.easyopencv.OpenCvWebcam;
+
 
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
@@ -22,12 +23,11 @@ import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 
-@TeleOp(name="CameraDiveMode", group="Production")
+@TeleOp
 public class CameraDriverMode extends LinearOpMode {
 
     // --- 1. Class-Level Hardware & Utility Declarations ---
     private ElapsedTime runtime = new ElapsedTime();
-    
     // Drive Motors
     private DcMotor backLeftDrive = null;
     private DcMotor backRightDrive = null;
@@ -86,17 +86,17 @@ public class CameraDriverMode extends LinearOpMode {
         webcam.setPipeline(visionPipeline);
         
         // Start Streaming
+
         webcam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener(){
             @Override
-            public void onOpenForTesting() {
+            public void onOpen() {
                 webcam.startStreaming(320, 240, OpenCvCameraRotation.UPRIGHT);
             }
-
             @Override
-            public void onFailure() {
+            public void onFailure(int errorCode) {
                 // Handle camera open failure
-                telemetry.addData("Error", "Camera failed to open!");
-                telemetry.update();
+                // telemetry.addData("Error", "Camera failed to open!");
+                // telemetry.update();
             }
         });
 
