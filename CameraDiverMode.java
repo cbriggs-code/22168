@@ -89,16 +89,24 @@ public class CameraDriverMode extends LinearOpMode {
 
         webcam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener(){
             @Override
-            public void onOpen() {
+            public void onOpened() {
                 webcam.startStreaming(320, 240, OpenCvCameraRotation.UPRIGHT);
             }
             @Override
-            public void onFailure(int errorCode) {
+            public void onError(int errorCode) {
                 // Handle camera open failure
                 // telemetry.addData("Error", "Camera failed to open!");
                 // telemetry.update();
             }
         });
+        
+        // --- MATCH START ---
+        waitForStart();
+        runtime.reset(); // Start the timer
+
+        // Finalize detection result upon start
+        Position finalPosition = visionPipeline.getDetectedPosition();
+        webcam.stopStreaming(); // Stop the camera feed to save resources
 
         telemetry.addData("Status", "Initialized & Vision Streaming");
         telemetry.update();
@@ -115,7 +123,7 @@ public class CameraDriverMode extends LinearOpMode {
         if(gamepad2.rightBumperWasPressed()){mainWheelIn=false;mainWheelOut=!mainWheelOut; intake.setDirection(DcMotor.Direction.FORWARD);}
         if(gamepad2.leftBumperWasPressed()){mainWheelOut=false;mainWheelIn=!mainWheelIn; intake.setDirection(DcMotor.Direction.REVERSE);}
         if(gamepad2.squareWasPressed()){internalTimer=3000;intakePush=false;}
-        if(gamepad1.AWasPressed()){cameraToggle = !cameraToggle;}
+        if(gamepad1.leftBumperWasPressed()){cameraToggle = !cameraToggle;}
         if(internalTimer<0){intakePush=true;}
         //if(gamepad1.triangleWasPressed()){intakePush=true;}
         internalTimer -= 100;
@@ -192,13 +200,6 @@ public class CameraDriverMode extends LinearOpMode {
             
         }
 
-        // --- MATCH START ---
-        waitForStart();
-        runtime.reset(); // Start the timer
-
-        // Finalize detection result upon start
-        Position finalPosition = visionPipeline.getDetectedPosition();
-        webcam.stopStreaming(); // Stop the camera feed to save resources
     }
     
     // --- 3. Helper Methods for Cleaner Code ---
@@ -220,9 +221,9 @@ public class CameraDriverMode extends LinearOpMode {
         // Define three Regions of Interest (ROIs) on the camera view
         // These coordinates are relative to the 320x240 image size set above.
         // You MUST tune these coordinates based on your robot's camera placement.
-        static final Rect ROI_LEFT = new Rect(new Point(0, 100), new Point(100, 200));
-        static final Rect ROI_CENTER = new Rect(new Point(110, 100), new Point(210, 200));
-        static final Rect ROI_RIGHT = new Rect(new Point(220, 100), new Point(320, 200));
+        public final Rect ROI_LEFT = new Rect(new Point(0, 100), new Point(100, 200));
+        public final Rect ROI_CENTER = new Rect(new Point(110, 100), new Point(210, 200));
+        public final Rect ROI_RIGHT = new Rect(new Point(220, 100), new Point(320, 200));
         
         // Output variable
         private Position position = Position.CENTER;
