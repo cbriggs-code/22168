@@ -8,6 +8,10 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
+import com.qualcomm.hardware.dfrobot.HuskyLens;
+import org.firstinspires.ftc.robotcore.internal.system.Deadline;
+
+import java.util.concurrent.TimeUnit;
 // so like just import this stuff later.....
 @TeleOp(name="Normaldrive", group="Linear OpMode")
 public class Normaldrive extends LinearOpMode {
@@ -18,9 +22,14 @@ public class Normaldrive extends LinearOpMode {
     DcMotor powerDrive;
     DcMotor intake;
     Servo push;
+    private final int READ_PERIOD = 1;
+
+    private HuskyLens huskyLens;
 
 @Override
     public void runOpMode() {
+      huskyLens = hardwareMap.get(HuskyLens.class, "aiCam");
+      Deadline rateLimit = new Deadline(READ_PERIOD, TimeUnit.SECONDS);
       backLeftDrive = hardwareMap.get(DcMotor.class, "m1");
       backRightDrive = hardwareMap.get(DcMotor.class, "m2");
       frontLeftDrive = hardwareMap.get(DcMotor.class, "m3");
@@ -30,14 +39,42 @@ public class Normaldrive extends LinearOpMode {
       push = hardwareMap.get(Servo.class, "push");
       backLeftDrive.setDirection(DcMotor.Direction.REVERSE);
       frontLeftDrive.setDirection(DcMotor.Direction.REVERSE);
+      
       Boolean outToShoot = false;
       Boolean inToShoot = false;
       Boolean mainWheelOut = false;
       Boolean mainWheelIn = false;
       Boolean intakePush = true;
       Integer internalTimer = 0;
+      rateLimit.expire();
+      if (!huskyLens.knock()) {
+            telemetry.addData(">>", "Problem communicating with " + huskyLens.getDeviceName());
+        } else {
+            telemetry.addData(">>", "Press start to continue");
+        }
+        huskyLens.selectAlgorithm(HuskyLens.Algorithm.TAG_RECOGNITION);
+
+        telemetry.update();
       waitForStart();
       while (opModeIsActive()) {
+        if (!rateLimit.hasExpired()) {
+                continue;
+            }
+            rateLimit.reset();
+            HuskyLens.Block[] blocks = huskyLens.blocks();
+            telemetry.addData("Block count", blocks.length);
+            for (int i = 0; i < blocks.length; i++) {
+                telemetry.addData("Block", blocks[i].toString());
+                /*
+                 * Here inside the FOR loop, you could save or evaluate specific info for the currently recognized Bounding Box:
+                 * - blocks[i].width and blocks[i].height   (size of box, in pixels)
+                 * - blocks[i].left and blocks[i].top       (edges of box)
+                 * - blocks[i].x and blocks[i].y            (center location)
+                 * - blocks[i].id                           (Color ID)
+                 *
+                 * These values have Java type int (integer).
+                 */
+            }
         if(gamepad1.dpad_up){}
         if(gamepad2.crossWasPressed()){inToShoot=false;outToShoot=!outToShoot; powerDrive.setDirection(DcMotor.Direction.FORWARD);
          }
