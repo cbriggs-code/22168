@@ -46,6 +46,7 @@ public class Normaldrive extends LinearOpMode {
       Boolean mainWheelIn = false;
       Boolean intakePush = true;
       Integer internalTimer = 0;
+      Integer pos = 1;
       rateLimit.expire();
       if (!huskyLens.knock()) {
             telemetry.addData(">>", "Problem communicating with " + huskyLens.getDeviceName());
@@ -65,6 +66,9 @@ public class Normaldrive extends LinearOpMode {
             telemetry.addData("Block count", blocks.length);
             for (int i = 0; i < blocks.length; i++) {
                 telemetry.addData("Block", blocks[i].toString());
+                pos = 1;
+                if(blocks[i].y>60){pos=2;}
+                if(blocks[i].y<40){pos=0;}
                 /*
                  * Here inside the FOR loop, you could save or evaluate specific info for the currently recognized Bounding Box:
                  * - blocks[i].width and blocks[i].height   (size of box, in pixels)
