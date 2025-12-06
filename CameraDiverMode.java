@@ -260,7 +260,12 @@ public class CameraDriverMode extends LinearOpMode {
             
             // 4. Determine the position based on the highest average brightness (most purple)
             double threshold = 50.0; // Tune this to confirm an object is present
-            
+            telemetry.addData("avgLeft",avgLeft);
+            telemetry.addData("avgCenter",avgCenter);
+            telemetry.addData("avgRight",avgRight);
+            telemetry.addData("ROI_LEFT.area()",ROI_LEFT.area());
+            telemetry.addData("ROI_CENTER.area()",ROI_CENTER.area());
+            telemetry.addData("ROI_RIGHT.area()",ROI_RIGHT.area());
             if (avgLeft > threshold && avgLeft > avgCenter && avgLeft > avgRight) {
                 position = Position.LEFT;
             } else if (avgCenter > threshold && avgCenter > avgLeft && avgCenter > avgRight) {
