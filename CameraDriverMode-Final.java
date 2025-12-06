@@ -1,3 +1,13 @@
+package org.firstinspires.ftc.robotcontroller.external.samples;
+
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.hardware.bosch.BNO055IMU;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.util.Range;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -12,8 +22,15 @@ import java.util.Collections;
  * 'AprilTagDetection', and 'ColorDetection' classes would map directly 
  * to library objects and methods.
  */
-public class CameraVisionSystem {
-
+@TeleOp
+public class CameraDriverMode extends LinearOpMode {
+    DcMotor backLeftDrive;
+    DcMotor backRightDrive;
+    DcMotor frontLeftDrive;
+    DcMotor frontRightDrive;
+    DcMotor powerDrive;
+    DcMotor intake;
+    Servo push;
     // --- Mock Data Structures (Simulating real vision library outputs) ---
 
     /**
@@ -155,8 +172,53 @@ public class CameraVisionSystem {
 
     // --- Main Method for Demonstration ---
 
-    public static void main(String[] args) {
-        System.out.println("--- Camera Vision System Initialized ---");
+    // public static void main(String[] args) {
+        // System.out.println("--- Camera Vision System Initialized ---");
+        
+        // CameraVisionSystem processor = new CameraVisionSystem();
+
+        // // 1. Mock AprilTag Input (Simulating tags found in a frame)
+        // List<AprilTagDetection> frameTags = new ArrayList<>();
+        // // Tag 5 is the anchor for our successful set (P, G, P)
+        // frameTags.add(new AprilTagDetection(5, 500, 300)); 
+        // // Tag 2 is another tag detected, maybe it anchors a different set
+        // frameTags.add(new AprilTagDetection(2, 100, 800)); 
+
+        // // 2. Process the frame
+        // List<OrderDetectionResult> results = processor.processFrame(frameTags);
+
+        // // 3. Output Final Command/Data
+        // System.out.println("\n--- Final Order Detection Summary ---");
+        // for (OrderDetectionResult result : results) {
+        //     if (result.isValid) {
+        //         // This is the data you would send to your robot/control system
+        //         System.out.printf("Action for Tag %d: Detected valid order -> %s\n", 
+        //             result.tagId, result.detectedOrder);
+        //     } else {
+        //         System.out.printf("Action for Tag %d: Invalid set, skipping or executing fallback.\n", 
+        //             result.tagId);
+        //     }
+    //     }
+        @Override
+    public void runOpMode() {
+      backLeftDrive = hardwareMap.get(DcMotor.class, "m1");
+      backRightDrive = hardwareMap.get(DcMotor.class, "m2");
+      frontLeftDrive = hardwareMap.get(DcMotor.class, "m3");
+      frontRightDrive = hardwareMap.get(DcMotor.class, "m4");
+      powerDrive = hardwareMap.get(DcMotor.class, "spinLaunch");
+      intake = hardwareMap.get(DcMotor.class, "intake");
+      push = hardwareMap.get(Servo.class, "push");
+      backLeftDrive.setDirection(DcMotor.Direction.REVERSE);
+      frontLeftDrive.setDirection(DcMotor.Direction.REVERSE);
+      Boolean outToShoot = false;
+      Boolean inToShoot = false;
+      Boolean mainWheelOut = false;
+      Boolean mainWheelIn = false;
+      Boolean intakePush = true;
+      Integer internalTimer = 0;
+      waitForStart();
+      while (opModeIsActive()) {
+                  System.out.println("--- Camera Vision System Initialized ---");
         
         CameraVisionSystem processor = new CameraVisionSystem();
 
@@ -181,7 +243,69 @@ public class CameraVisionSystem {
                 System.out.printf("Action for Tag %d: Invalid set, skipping or executing fallback.\n", 
                     result.tagId);
             }
+        if(gamepad1.dpad_up){}
+        if(gamepad2.crossWasPressed()){inToShoot=false;outToShoot=!outToShoot; powerDrive.setDirection(DcMotor.Direction.FORWARD);
+         }
+         if(gamepad2.circleWasPressed()){outToShoot=false;inToShoot=!inToShoot; powerDrive.setDirection(DcMotor.Direction.REVERSE);
+         }
+        if(gamepad2.rightBumperWasPressed()){mainWheelIn=false;mainWheelOut=!mainWheelOut; intake.setDirection(DcMotor.Direction.FORWARD);}
+        if(gamepad2.leftBumperWasPressed()){mainWheelOut=false;mainWheelIn=!mainWheelIn; intake.setDirection(DcMotor.Direction.REVERSE);}
+        if(gamepad2.squareWasPressed()){internalTimer=3000;intakePush=false;}
+        if(internalTimer<0){intakePush=true;}
+        //if(gamepad1.triangleWasPressed()){intakePush=true;}
+        internalTimer -= 100;
+        backLeftDrive.setPower(-gamepad1.left_stick_y-gamepad1.left_stick_x+gamepad1.right_stick_x);
+        backRightDrive.setPower(-gamepad1.left_stick_y+gamepad1.left_stick_x-gamepad1.right_stick_x);
+        frontLeftDrive.setPower(-gamepad1.left_stick_y+gamepad1.left_stick_x+gamepad1.right_stick_x);
+        frontRightDrive.setPower(-gamepad1.left_stick_y-gamepad1.left_stick_x-gamepad1.right_stick_x);
+          // need to replace this stuff with the dead wheel encoders
+        telemetry.addData("left", backLeftDrive.getCurrentPosition());
+        telemetry.addData("right", backRightDrive.getCurrentPosition());
+        telemetry.addData("top", frontLeftDrive.getCurrentPosition());
+        telemetry.update();
+        if(gamepad1.dpad_up){
+          backLeftDrive.setPower(.4);
+          backRightDrive.setPower(.4);
+          frontLeftDrive.setPower(.4);
+          frontRightDrive.setPower(.4);
         }
+        if(gamepad1.dpad_down){
+          backLeftDrive.setPower(-.4);
+          backRightDrive.setPower(-.4);
+          frontLeftDrive.setPower(-.4);
+          frontRightDrive.setPower(-.4);
+        }
+        if(gamepad1.dpad_left){
+          backLeftDrive.setPower(.4);
+          backRightDrive.setPower(-.4);
+          frontLeftDrive.setPower(-.4);
+          frontRightDrive.setPower(.4);
+        }
+        if(gamepad1.dpad_right){
+          backLeftDrive.setPower(-.4);
+          backRightDrive.setPower(.4);
+          frontLeftDrive.setPower(.4);
+          frontRightDrive.setPower(-.4);
+        }
+        if(mainWheelOut || mainWheelIn){
+          intake.setPower(1);
+          
+        }else{
+          intake.setPower(0);
+        }
+        if(outToShoot || inToShoot){
+            // code for going back to the start point to test encoders would be here but the testing i have does not have dead wheels nor a working imu system
+            powerDrive.setPower(-1);
+        }else{
+          powerDrive.setPower(0);
+        }
+        if(intakePush){
+          push.setPosition(1);
+          
+        }else{
+          push.setPosition(0.7);
+        }
+      }
         
         System.out.println("\n[Note: This is a simulation. The 'detectColorInROI' method would contain actual OpenCV/computer vision logic.]");
     }
