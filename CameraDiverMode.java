@@ -115,6 +115,7 @@ public class CameraDriverMode extends LinearOpMode {
         while (opModeIsActive()) {
             // Constantly update the detected position before the match starts
             detectedPosition = visionPipeline.getDetectedPosition();
+            finalPosition = visionPipeline.getDetectedPosition();
         if(gamepad1.dpad_up){}
         if(gamepad2.crossWasPressed()){inToShoot=false;outToShoot=!outToShoot; powerDrive.setDirection(DcMotor.Direction.FORWARD);
          }
@@ -215,8 +216,8 @@ public class CameraDriverMode extends LinearOpMode {
         
         // Purple Sphere Detection Constants (Needs fine-tuning in a real environment!)
         // These are example HSV ranges for purple.
-        private final Scalar PURPLE_LOW = new Scalar(260, 100, 100);
-        private final Scalar PURPLE_HIGH = new Scalar(300, 100, 100);
+        private final Scalar PURPLE_LOW = new Scalar(100, 100, 1);
+        private final Scalar PURPLE_HIGH = new Scalar(255, 255, 100);
 
         // Define three Regions of Interest (ROIs) on the camera view
         // These coordinates are relative to the 320x240 image size set above.
@@ -260,12 +261,7 @@ public class CameraDriverMode extends LinearOpMode {
             
             // 4. Determine the position based on the highest average brightness (most purple)
             double threshold = 50.0; // Tune this to confirm an object is present
-            telemetry.addData("avgLeft",avgLeft);
-            telemetry.addData("avgCenter",avgCenter);
-            telemetry.addData("avgRight",avgRight);
-            telemetry.addData("ROI_LEFT.area()",ROI_LEFT.area());
-            telemetry.addData("ROI_CENTER.area()",ROI_CENTER.area());
-            telemetry.addData("ROI_RIGHT.area()",ROI_RIGHT.area());
+            
             if (avgLeft > threshold && avgLeft > avgCenter && avgLeft > avgRight) {
                 position = Position.LEFT;
             } else if (avgCenter > threshold && avgCenter > avgLeft && avgCenter > avgRight) {
