@@ -17,17 +17,13 @@ public class AutoJava extends LinearOpMode {
     DcMotor backRightDrive;
     DcMotor frontLeftDrive;
     DcMotor frontRightDrive;
-    DcMotor powerDrive;
-    DcMotor intake;
-    Servo push;
+
         
         backLeftDrive = hardwareMap.get(DcMotor.class, "m1");
         backRightDrive = hardwareMap.get(DcMotor.class, "m2");
         frontLeftDrive = hardwareMap.get(DcMotor.class, "m3");
         frontRightDrive = hardwareMap.get(DcMotor.class, "m4");
-        powerDrive = hardwareMap.get(DcMotor.class, "spinLaunch");
-        intake = hardwareMap.get(DcMotor.class, "intake");
-        push = hardwareMap.get(Servo.class, "push");
+        
         //powerDrive = hardwareMap.get(DcMotor.class, "powerDrive");
         backLeftDrive.setDirection(DcMotor.Direction.REVERSE);
         frontLeftDrive.setDirection(DcMotor.Direction.REVERSE);
@@ -35,7 +31,12 @@ public class AutoJava extends LinearOpMode {
         waitForStart();
         //while (opModeIsActive()) {
 
-            backLeftDrive.setPower(1.6);
+            backLeftDrive.setPower(.6);
+            backRightDrive.setPower(.6);
+            frontLeftDrive.setPower(.6);
+            frontRightDrive.setPower(.6);
+
+    /*      backLeftDrive.setPower(1.6);
             backRightDrive.setPower(1.6);
             frontLeftDrive.setPower(1.6);
             frontRightDrive.setPower(1.6);
@@ -66,11 +67,6 @@ public class AutoJava extends LinearOpMode {
             frontRightDrive.setPower(0);
             intake.setPower(1);
             sleep(4500);
-            //launch code 
-            powerDrive.setPower(-1);
-            push.setPosition(0.7);
-            sleep(1000);
-            push.setPosition(1);
-            intake.setPower(0);
+        */
     }
 }
