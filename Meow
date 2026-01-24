@@ -34,7 +34,56 @@ public class Meow extends LinearOpMode {
     private RevColorSensorV3 c2;
     private RevColorSensorV3 c3;
 
+// package org.firstinspires.ftc.teamcode;
 
+import android.graphics.Color;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.hardware.rev.RevColorSensorV3;
+
+@TeleOp(name="ColorDetectionFix")
+public class Meow extends LinearOpMode {
+    private RevColorSensorV3 c1;
+
+    /* Define target constants
+    private final double GREEN_HUE = 120.0;
+    private final double PURPLE_HUE = 280.0;
+    private final double THRESHOLD = 20.0; // Degrees of tolerance
+
+    @Override
+    public void runOpMode() {
+        // Initialize sensor
+        c1 = hardwareMap.get(RevColorSensorV3.class, "c1");
+
+        waitForStart();
+
+        while (opModeIsActive()) {
+            // Get RGB values and convert to HSV
+            float[] hsv = new float[3];
+            Color.RGBToHSV(c1.red(), c1.green(), c1.blue(), hsv);
+            float currentHue = hsv[0];
+
+            String detected = "None";
+
+            if (getHueDistance(currentHue, GREEN_HUE) < THRESHOLD) {
+                detected = "Green";
+            } else if (getHueDistance(currentHue, PURPLE_HUE) < THRESHOLD) {
+                detected = "Purple";
+            }
+
+            telemetry.addData("Hue", currentHue);
+            telemetry.addData("Detected", detected);
+            telemetry.update();
+        }
+    }
+
+    // Helper to find the shortest distance between two angles (0-360)
+    public double getHueDistance(double h1, double h2) {
+        double diff = Math.abs(h1 - h2) % 360;
+        return diff > 180 ? 360 - diff : diff;
+    }
+}
+*/
     
     public double dist(int r1,int g1, int b1, int r2, int g2, int b2){
         return (JavaUtil.colorToHue(Color.rgb(r2, g2, b2))-JavaUtil.colorToHue(Color.rgb(r1, g1, b1)));
