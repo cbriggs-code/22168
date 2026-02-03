@@ -11,6 +11,15 @@ import com.pedropathing.follower.Follower;
 import com.pedropathing.paths.PathChain;
 import com.pedropathing.geometry.Pose;
 
+import org.firstinspires.ftc.robotcore.external.JavaUtil;
+import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.Blinker;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.hardware.rev.RevColorSensorV3;
+import android.graphics.Color;
+
 
 @Autonomous(name = "Blue Pathing Autonomous", group = "Autonomous")
 @Configurable // Panels
@@ -19,6 +28,15 @@ public class PedroAutonomous extends OpMode {
     public Follower follower; // Pedro Pathing follower instance
     private int pathState = 0; // Current autonomous path state (state machine)
     private Paths paths; // Paths defined in the Paths class
+
+    private Blinker control_Hub;
+    private DcMotor m1;
+    private DcMotor m2;
+    private DcMotor m3;
+    private DcMotor m4;
+    private RevColorSensorV3 c1;
+    private RevColorSensorV3 c2;
+    private RevColorSensorV3 c3;
 
     @Override
     public void init() {
