@@ -12,7 +12,7 @@ import com.pedropathing.paths.PathChain;
 import com.pedropathing.geometry.Pose;
 
 
-@Autonomous(name = "Red Pathing Autonomous", group = "Autonomous")
+@Autonomous(name = "Blue Pathing Autonomous", group = "Autonomous")
 @Configurable // Panels
 public class PedroAutonomous extends OpMode {
     private TelemetryManager panelsTelemetry; // Panels Telemetry instance
