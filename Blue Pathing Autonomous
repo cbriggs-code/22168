@@ -279,7 +279,7 @@ Path15 = follower.pathBuilder().addPath(
               case 6:
                     //if (!follower.isBusy()) {
                         follower.followPath(paths.Path7, true);
-                        setPathState(7;
+                        setPathState(7);
                     //}
                     break;
               case 7:
