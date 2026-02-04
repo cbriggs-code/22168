@@ -40,6 +40,12 @@ public class PedroAutonomous extends OpMode {
 
     @Override
     public void init() {
+
+        public double getHueDistance(double h1, double h2) {
+        double diff = Math.abs(h1 - h2) % 360;
+        return diff > 180 ? 360 - diff : diff;
+}
+
         panelsTelemetry = PanelsTelemetry.INSTANCE.getTelemetry();
 
         follower = Constants.createFollower(hardwareMap);
