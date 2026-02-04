@@ -114,7 +114,7 @@ public class Meow extends LinearOpMode {
                 telemetry.addData("c1", "p");
             }
                 }else{
-                    telemetry.addData("c1", "no ballin");
+                    telemetry.addData("c1", "no ball in");
                 }
             
             //telemetry.addData("c1c", c1.red()+"|"+c1.green()+"|"+c1.blue());
