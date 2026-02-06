@@ -1,4 +1,3 @@
-
     package org.firstinspires.ftc.teamcode;
     import com.qualcomm.robotcore.eventloop.opmode.OpMode;
     import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -12,7 +11,7 @@
     import com.pedropathing.paths.PathChain;
     import com.pedropathing.geometry.Pose;
     
-    @Autonomous(name = "Red Pathing Autonomous", group = "Autonomous")
+    @Autonomous(name = "Core Red Pathing Autonomous", group = "Autonomous")
     @Configurable // Panels
     public class PedroAutonomous extends OpMode {
       private TelemetryManager panelsTelemetry; // Panels Telemetry instance
@@ -185,10 +184,92 @@ Path12 = follower.pathBuilder().addPath(
   }
   
 
-      public void autonomousPathUpdate() {
-          // Add your state machine Here
-          // Access paths with paths.pathName
-          // Refer to the Pedro Pathing Docs (Auto Example) for an example state machine
-      }
+      public int autonomousPathUpdate() {
+        if(!follower.isBusy()) {
+            switch (pathState) {
+                case 0:
+                    setPathState(1);
+                    follower.followPath(paths.Path1, true);
+                    break;
+                case 1:
+                    //if (!follower.isBusy()) {
+                        setPathState(2);
+                        follower.followPath(paths.Path2, true);
+                    //}
+                    break;
+                case 2:
+                    //if (!follower.isBusy()) {
+                        setPathState(3);
+                        follower.followPath(paths.Path3, true);
+                    //}
+                    break;
+                case 3:
+                    //if (!follower.isBusy()) {
+                        setPathState(4);
+                        follower.followPath(paths.Path4, true);
+                    //}
+                    break;
+                case 4:
+                    //if (!follower.isBusy()) {
+                        setPathState(5);
+                        follower.followPath(paths.Path5, true);
+                    //}
+                    break;
+                case 5:
+                    //if (!follower.isBusy()) {
+                        follower.followPath(paths.Path6, true);
+                        setPathState(6);
+                    //}
+                    break;
+              case 6:
+                    //if (!follower.isBusy()) {
+                        follower.followPath(paths.Path7, true);
+                        setPathState(7);
+                    //}
+                    break;
+              case 7:
+                    //if (!follower.isBusy()) {
+                        follower.followPath(paths.Path8, true);
+                        setPathState(8);
+                    //}
+                    break;
+              case 8:
+                    //if (!follower.isBusy()) {
+                        follower.followPath(paths.Path9, true);
+                        setPathState(9);
+                    //}
+                    break;
+              case 9:
+                    //if (!follower.isBusy()) {
+                        follower.followPath(paths.Path10, true);
+                        setPathState(10);
+                    //}
+                    break;
+              case 10:
+                    //if (!follower.isBusy()) {
+                        follower.followPath(paths.Path11, true);
+                        setPathState(11);
+                    //}
+                    break;
+              case 11:
+                    //if (!follower.isBusy()) {
+                        follower.followPath(paths.Path12, true);
+                        setPathState(12);
+                    //}
+                    break;
+              case 12:
+                    //if (!follower.isBusy()) {
+                        follower.followPath(paths.Path13, true);
+                        setPathState(13);
+                    //}
+                    break;
+            }
+        }
+        // Event markers will automatically trigger at their positions
+        // Make sure to register NamedCommands in your RobotContainer
+        return pathState;
     }
-    
+    public void setPathState(int pState) {
+        pathState = pState;
+    }
+}
