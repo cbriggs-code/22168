@@ -12,7 +12,7 @@
     import com.pedropathing.paths.PathChain;
     import com.pedropathing.geometry.Pose;
     
-    @Autonomous(name = "Blue Pathing Autonomous", group = "Autonomous")
+    @Autonomous(name = "Red Pathing Autonomous", group = "Autonomous")
     @Configurable // Panels
     public class PedroAutonomous extends OpMode {
       private TelemetryManager panelsTelemetry; // Panels Telemetry instance
@@ -64,7 +64,7 @@ public PathChain Path12;
     public Paths(Follower follower) {
       Path1 = follower.pathBuilder().addPath(
           new BezierLine(
-            new Pose(83.813, 8.224),
+            new Pose(84.262, 9.346),
             
             new Pose(102.654, 100.822)
           )
@@ -78,7 +78,7 @@ Path2 = follower.pathBuilder().addPath(
             
             new Pose(120.374, 119.084)
           )
-        ).setTangentHeadingInterpolation()
+        ).setLinearHeadingInterpolation(Math.toRadians(40), Math.toRadians(40))
         
         .build();
 
@@ -98,7 +98,7 @@ Path4 = follower.pathBuilder().addPath(
             
             new Pose(129.607, 83.271)
           )
-        ).setTangentHeadingInterpolation()
+        ).setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0))
         
         .build();
 
@@ -126,15 +126,15 @@ Path7 = follower.pathBuilder().addPath(
           new BezierLine(
             new Pose(97.617, 59.533),
             
-            new Pose(127.645, 59.280)
+            new Pose(126.075, 59.505)
           )
-        ).setTangentHeadingInterpolation()
+        ).setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0))
         
         .build();
 
 Path8 = follower.pathBuilder().addPath(
           new BezierLine(
-            new Pose(127.645, 59.280),
+            new Pose(126.075, 59.505),
             
             new Pose(120.346, 118.850)
           )
@@ -158,7 +158,7 @@ Path10 = follower.pathBuilder().addPath(
             
             new Pose(127.673, 34.804)
           )
-        ).setTangentHeadingInterpolation()
+        ).setLinearHeadingInterpolation(Math.toRadians(0), Math.toRadians(0))
         
         .build();
 
@@ -176,9 +176,9 @@ Path12 = follower.pathBuilder().addPath(
           new BezierLine(
             new Pose(120.542, 118.206),
             
-            new Pose(112.654, 128.822)
+            new Pose(114.000, 127.028)
           )
-        ).setTangentHeadingInterpolation()
+        ).setLinearHeadingInterpolation(Math.toRadians(40), Math.toRadians(40))
         
         .build();
     }
