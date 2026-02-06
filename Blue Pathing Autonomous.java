@@ -1,51 +1,27 @@
-package org.firstinspires.ftc.teamcode;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.bylazar.configurables.annotations.Configurable;
-import com.bylazar.telemetry.TelemetryManager;
-import com.bylazar.telemetry.PanelsTelemetry;
-import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
-import com.pedropathing.geometry.BezierCurve;
-import com.pedropathing.geometry.BezierLine;
-import com.pedropathing.follower.Follower;
-import com.pedropathing.paths.PathChain;
-import com.pedropathing.geometry.Pose;
 
-import org.firstinspires.ftc.robotcore.external.JavaUtil;
-import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.hardware.Blinker;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.hardware.rev.RevColorSensorV3;
-import android.graphics.Color;
-
-
-@Autonomous(name = "Blue Pathing Autonomous", group = "Autonomous")
-@Configurable // Panels
-public class PedroAutonomous extends OpMode {
-    private TelemetryManager panelsTelemetry; // Panels Telemetry instance
-    public Follower follower; // Pedro Pathing follower instance
-    private int pathState = 0; // Current autonomous path state (state machine)
-    private Paths paths; // Paths defined in the Paths class
-
-    private Blinker control_Hub;
-    private DcMotor m1;
-    private DcMotor m2;
-    private DcMotor m3;
-    private DcMotor m4;
-    private RevColorSensorV3 c1;
-    private RevColorSensorV3 c2;
-    private RevColorSensorV3 c3;
-
-    @Override
-    public void init() {
-
-        public double getHueDistance(double h1, double h2) {
-        double diff = Math.abs(h1 - h2) % 360;
-        return diff > 180 ? 360 - diff : diff;
-}
-
+    package org.firstinspires.ftc.teamcode;
+    import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+    import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+    import com.bylazar.configurables.annotations.Configurable;
+    import com.bylazar.telemetry.TelemetryManager;
+    import com.bylazar.telemetry.PanelsTelemetry;
+    import org.firstinspires.ftc.teamcode.pedroPathing.Constants;
+    import com.pedropathing.geometry.BezierCurve;
+    import com.pedropathing.geometry.BezierLine;
+    import com.pedropathing.follower.Follower;
+    import com.pedropathing.paths.PathChain;
+    import com.pedropathing.geometry.Pose;
+    
+    @Autonomous(name = "Pedro Pathing Autonomous", group = "Autonomous")
+    @Configurable // Panels
+    public class PedroAutonomous extends OpMode {
+      private TelemetryManager panelsTelemetry; // Panels Telemetry instance
+      public Follower follower; // Pedro Pathing follower instance
+      private int pathState; // Current autonomous path state (state machine)
+      private Paths paths; // Paths defined in the Paths class
+      
+      @Override
+      public void init() {
         panelsTelemetry = PanelsTelemetry.INSTANCE.getTelemetry();
 
         follower = Constants.createFollower(hardwareMap);
@@ -55,26 +31,22 @@ public class PedroAutonomous extends OpMode {
 
         panelsTelemetry.debug("Status", "Initialized");
         panelsTelemetry.update(telemetry);
-    }
-    public void start(){
-        setPathState(0);
-    }
-
-    @Override
-    public void loop() {
+      }
+      
+      @Override
+      public void loop() {
         follower.update(); // Update Pedro Pathing
-         autonomousPathUpdate(); // Update autonomous state machine
+        pathState = autonomousPathUpdate(); // Update autonomous state machine
 
         // Log values to Panels and Driver Station
         panelsTelemetry.debug("Path State", pathState);
         panelsTelemetry.debug("X", follower.getPose().getX());
         panelsTelemetry.debug("Y", follower.getPose().getY());
         panelsTelemetry.debug("Heading", follower.getPose().getHeading());
-        panelsTelemetry.debug("pathState: ",pathState);
         panelsTelemetry.update(telemetry);
-    }
+      }
 
-
+      
   public static class Paths {
     public PathChain Path1;
 public PathChain Path2;
@@ -88,36 +60,33 @@ public PathChain Path9;
 public PathChain Path10;
 public PathChain Path11;
 public PathChain Path12;
-public PathChain Path13;
-public PathChain Path14;
-public PathChain Path15;
     
     public Paths(Follower follower) {
       Path1 = follower.pathBuilder().addPath(
           new BezierLine(
-            new Pose(56.000, 8.000),
+            new Pose(59.738, 9.346),
             
-            new Pose(58.243, 119.439)
+            new Pose(41.346, 100.822)
           )
-        ).setLinearHeadingInterpolation(Math.toRadians(90), Math.toRadians(187))
+        ).setLinearHeadingInterpolation(Math.toRadians(90), Math.toRadians(140))
         
         .build();
 
 Path2 = follower.pathBuilder().addPath(
           new BezierLine(
-            new Pose(58.243, 119.439),
+            new Pose(41.346, 100.822),
             
-            new Pose(27.757, 115.402)
+            new Pose(23.626, 119.084)
           )
-        ).setLinearHeadingInterpolation(Math.toRadians(187), Math.toRadians(140))
+        ).setLinearHeadingInterpolation(Math.toRadians(140), Math.toRadians(140))
         
         .build();
 
 Path3 = follower.pathBuilder().addPath(
           new BezierLine(
-            new Pose(27.757, 115.402),
+            new Pose(23.626, 119.084),
             
-            new Pose(46.308, 84.000)
+            new Pose(46.477, 82.935)
           )
         ).setLinearHeadingInterpolation(Math.toRadians(140), Math.toRadians(180))
         
@@ -125,19 +94,19 @@ Path3 = follower.pathBuilder().addPath(
 
 Path4 = follower.pathBuilder().addPath(
           new BezierLine(
-            new Pose(46.308, 84.000),
+            new Pose(46.477, 82.935),
             
-            new Pose(17.243, 83.785)
+            new Pose(14.393, 83.271)
           )
-        ).setTangentHeadingInterpolation()
+        ).setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(180))
         
         .build();
 
 Path5 = follower.pathBuilder().addPath(
           new BezierLine(
-            new Pose(17.243, 83.785),
+            new Pose(14.393, 83.271),
             
-            new Pose(27.738, 115.813)
+            new Pose(23.224, 118.944)
           )
         ).setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(140))
         
@@ -145,9 +114,9 @@ Path5 = follower.pathBuilder().addPath(
 
 Path6 = follower.pathBuilder().addPath(
           new BezierLine(
-            new Pose(27.738, 115.813),
+            new Pose(23.224, 118.944),
             
-            new Pose(48.411, 59.766)
+            new Pose(46.383, 59.533)
           )
         ).setLinearHeadingInterpolation(Math.toRadians(140), Math.toRadians(180))
         
@@ -155,19 +124,19 @@ Path6 = follower.pathBuilder().addPath(
 
 Path7 = follower.pathBuilder().addPath(
           new BezierLine(
-            new Pose(48.411, 59.766),
+            new Pose(46.383, 59.533),
             
-            new Pose(17.402, 59.720)
+            new Pose(17.925, 59.505)
           )
-        ).setTangentHeadingInterpolation()
+        ).setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(180))
         
         .build();
 
 Path8 = follower.pathBuilder().addPath(
           new BezierLine(
-            new Pose(17.402, 59.720),
+            new Pose(17.925, 59.505),
             
-            new Pose(27.776, 115.112)
+            new Pose(23.654, 118.850)
           )
         ).setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(140))
         
@@ -175,9 +144,9 @@ Path8 = follower.pathBuilder().addPath(
 
 Path9 = follower.pathBuilder().addPath(
           new BezierLine(
-            new Pose(27.776, 115.112),
+            new Pose(23.654, 118.850),
             
-            new Pose(47.850, 36.159)
+            new Pose(46.879, 35.019)
           )
         ).setLinearHeadingInterpolation(Math.toRadians(140), Math.toRadians(180))
         
@@ -185,19 +154,19 @@ Path9 = follower.pathBuilder().addPath(
 
 Path10 = follower.pathBuilder().addPath(
           new BezierLine(
-            new Pose(47.850, 36.159),
+            new Pose(46.879, 35.019),
             
-            new Pose(17.290, 36.458)
+            new Pose(16.327, 34.804)
           )
-        ).setTangentHeadingInterpolation()
+        ).setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(180))
         
         .build();
 
 Path11 = follower.pathBuilder().addPath(
           new BezierLine(
-            new Pose(17.290, 36.458),
+            new Pose(16.327, 34.804),
             
-            new Pose(27.579, 114.850)
+            new Pose(23.458, 118.206)
           )
         ).setLinearHeadingInterpolation(Math.toRadians(180), Math.toRadians(140))
         
@@ -205,41 +174,11 @@ Path11 = follower.pathBuilder().addPath(
 
 Path12 = follower.pathBuilder().addPath(
           new BezierLine(
-            new Pose(27.579, 114.850),
+            new Pose(23.458, 118.206),
             
-            new Pose(22.850, 41.963)
+            new Pose(30.000, 127.028)
           )
-        ).setLinearHeadingInterpolation(Math.toRadians(140), Math.toRadians(223))
-        
-        .build();
-
-Path13 = follower.pathBuilder().addPath(
-          new BezierLine(
-            new Pose(22.850, 41.963),
-            
-            new Pose(8.542, 31.336)
-          )
-        ).setLinearHeadingInterpolation(Math.toRadians(223), Math.toRadians(270))
-        
-        .build();
-
-Path14 = follower.pathBuilder().addPath(
-          new BezierLine(
-            new Pose(8.542, 31.336),
-            
-            new Pose(8.757, 6.187)
-          )
-        ).setTangentHeadingInterpolation()
-        
-        .build();
-
-Path15 = follower.pathBuilder().addPath(
-          new BezierLine(
-            new Pose(8.757, 6.187),
-            
-            new Pose(27.701, 116.449)
-          )
-        ).setLinearHeadingInterpolation(Math.toRadians(270), Math.toRadians(140))
+        ).setLinearHeadingInterpolation(Math.toRadians(140), Math.toRadians(140))
         
         .build();
     }
@@ -324,28 +263,6 @@ Path15 = follower.pathBuilder().addPath(
                         setPathState(13);
                     //}
                     break;
-              case 13:
-                    //if (!follower.isBusy()) {
-                        follower.followPath(paths.Path14, true);
-                        setPathState(14);
-                    //}
-                    break;
-              case 14:
-                    //if (!follower.isBusy()) {
-                        follower.followPath(paths.Path15, true);
-                        setPathState(15);
-                    //}
-                    break;
-               case 15:
-                    //if (!follower.isBusy()) {
-                        follower.followPath(paths.Path16, true);
-                        setPathState(16);
-                    //}
-                    break;
-                default:
-                    telemetry.addLine("all done (:");
-                    break;
-
             }
         }
         // Event markers will automatically trigger at their positions
@@ -355,6 +272,4 @@ Path15 = follower.pathBuilder().addPath(
     public void setPathState(int pState) {
         pathState = pState;
     }
-
-
 }
