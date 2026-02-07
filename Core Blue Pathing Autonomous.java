@@ -11,8 +11,10 @@
     import com.pedropathing.follower.Follower;
     import com.pedropathing.paths.PathChain;
     import com.pedropathing.geometry.Pose;
-    
-    @Autonomous(name = "Pedro Pathing Autonomous", group = "Autonomous")
+
+//I was here
+
+    @Autonomous(name = "Core Blue Pathing Autonomous", group = "Autonomous")
     @Configurable // Panels
     public class PedroAutonomous extends OpMode {
       private TelemetryManager panelsTelemetry; // Panels Telemetry instance
