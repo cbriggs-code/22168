@@ -265,8 +265,6 @@ Path12 = follower.pathBuilder().addPath(
                     break;
             }
         }
-        // Event markers will automatically trigger at their positions
-        // Make sure to register NamedCommands in your RobotContainer
         return pathState;
     }
     public void setPathState(int pState) {
