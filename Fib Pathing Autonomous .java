@@ -50,12 +50,12 @@
 
       
   public static class Paths {
-    public PathChain Path2;
+    public PathChain Path1;
 public PathChain Path2;
 public PathChain Path3;
     
     public Paths(Follower follower) {
-      Path2 = follower.pathBuilder().addPath(
+      Path1 = follower.pathBuilder().addPath(
           new BezierLine(
             new Pose(19.813, 122.393),
             
@@ -113,6 +113,4 @@ Path3 = follower.pathBuilder().addPath(
     public void setPathState(int pState) {
         pathState = pState;
     }
-
-
 }
